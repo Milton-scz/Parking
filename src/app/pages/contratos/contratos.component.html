@@ -1,0 +1,65 @@
+<section id="contenido_principal" class="container">
+  <div class="row justify-content-center">
+      <div class="col text-center">
+          <h4 class="box-title text-secondary" style="font-size: 30px; ">
+              Administrar Contratos
+          </h4>
+          <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            {{ successMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            {{ errorMessage }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+      </div>
+  </div>
+
+  <div class="row mt-3">
+      <div class="col-md-12">
+          <div class="card border-dark">
+              <div class="card-body p-3">
+                  <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-condensed" id="tabla-empresas">
+                          <thead>
+                              <tr>
+                                  <th colspan="5">
+
+                                  </th>
+                              </tr>
+                          </thead>
+                          <thead class="bg-light">
+                              <tr>
+                                  <th class="text-center">ID</th>
+                                  <th class="text-center">trxhash</th>
+
+                                  <th class="text-center">Accion</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let contrato of contratos">
+                                  <td class="text-center">{{contrato.smartId}}</td>
+                                  <td class="text-center">{{contrato.trxHash}}</td>
+                                  <td class="text-center">
+                                    <a *ngIf="contrato.trxHash" [href]="'https://sepolia.arbiscan.io/tx/' + contrato.trxHash" target="_blank">
+                                      <i class="fas fa-eye"></i>
+                                    </a>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <!-- Paginación -->
+                      <mat-paginator
+                      [length]="pageInfo.totalElementos"
+                     [pageSize]="pageSize"
+                     [pageIndex]="paginaActual"
+                     [pageSizeOptions]="[5,10, 20, 50,100,200,500,1000,2000,5000]"
+                     (page)="onPageChange($event)">
+                    </mat-paginator>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+<div class="container mt-5">
+  <!-- Mensajes de éxito y error -->
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    {{ successMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+    <!-- Campo de búsqueda de placa -->
+    <div class="form-group text-center">
+      <input type="text" formControlName="placa" (input)="buscarRegistro()" class="form-control text-center" placeholder="BUSCAR POR PLACA"
+      style="font-weight: bold; font-size: 4rem; height: 100px; text-transform: uppercase;">
+    </div>
+
+    <!-- Información del Vehículo -->
+    <div class="border p-4 rounded mt-4">
+      <h4 class="text-center">Información</h4>
+      <div class="row">
+        <div class="col-6">
+          <p><strong>Placa:</strong> {{ registroForm.value.placa }}</p>
+          <p><strong>Nro Plaza:</strong> {{ numeroPlaza }}</p>
+          <p><strong>Hora de Entrada:</strong> {{ registroForm.value.horaIngreso }}</p>
+          <p><strong>Fecha de Entrada:</strong> {{ registroForm.value.fechaIngreso }}</p>
+        </div>
+        <div class="col-6">
+          <p><strong>Hora de Salida:</strong> {{ registroForm.value.horaSalida }}</p>
+          <p><strong>Fecha de Salida:</strong> {{ registroForm.value.fechaSalida }}</p>
+          <p><strong>Clase de Vehículo:</strong> {{ registroForm.value.tipoVehiculo }}</p>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-6">
+          <p><strong>Tiempo Transcurrido:</strong> {{ tiempoTranscurrido }}</p>
+        </div>
+        <div class="col-6">
+          <p><strong>Cobro por Parking:</strong> {{ registroForm.value.cobroParking }}</p>
+          <p><strong>Cobro por Lavado:</strong> {{ registroForm.value.precio_lavado}}</p>
+        </div>
+      </div>
+
+      <!-- Opciones de lavado -->
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="siLavado" name="lavado" [checked]="lavadoSeleccionado === true" (change)="onLavadoChange(true)">
+        <label class="form-check-label" for="siLavado">SI Lavado</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" class="form-check-input" id="noLavado" name="lavado" [checked]="lavadoSeleccionado === false" (change)="onLavadoChange(false)">
+        <label class="form-check-label" for="noLavado">NO Lavado</label>
+      </div>
+
+
+
+      <!-- Monto Total a Pagar -->
+      <div class="form-group mt-4">
+        <label for="montoTotal">Monto Total:</label>
+        <input type="text" class="form-control" id="montoTotal" [value]="montoTotal" readonly />
+      </div>
+
+      <!-- Botón de pago -->
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-success btn-lg">
+          <i class="fas fa-credit-card"></i> Ir a Pagar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,89 @@
+<div class="container mt-5">
+  <!-- Mensajes de éxito y error -->
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    {{ successMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <!-- Formulario para crear tarifa -->
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center mb-4">Agregar Tarifa</h2>
+      <form [formGroup]="tarifaForm" (ngSubmit)="onSubmit()">
+
+        <!-- Campo para Tipo de Vehiculo -->
+        <div class="form-group">
+          <label for="tipoVehiculo">Tipo de Vehiculo:</label>
+          <input
+            type="text"
+            id="tipoVehiculo"
+            formControlName="tipoVehiculo"
+            class="form-control"
+            placeholder="Ingrese el tipo de vehículo"
+          >
+          <div *ngIf="tarifaForm.get('tipoVehiculo')?.invalid && tarifaForm.get('tipoVehiculo')?.touched" class="text-danger">
+            El tipo de vehículo es obligatorio.
+          </div>
+        </div>
+
+        <!-- Campo para Precio por Hora -->
+        <div class="form-group">
+          <label for="precio_hora">Precio por Hora:</label>
+          <input
+            type="number"
+            id="precio_hora"
+            formControlName="precio_hora"
+            class="form-control"
+            placeholder="Ingrese el precio por hora"
+            min="0"
+          >
+          <div *ngIf="tarifaForm.get('precio_hora')?.invalid && tarifaForm.get('precio_hora')?.touched" class="text-danger">
+            El precio por hora es obligatorio.
+          </div>
+        </div>
+
+        <!-- Campo para Precio Mensual -->
+        <div class="form-group">
+          <label for="precio_dia">Precio Por Dia:</label>
+          <input
+            type="number"
+            id="precio_dia"
+            formControlName="precio_dia"
+            class="form-control"
+            placeholder="Ingrese el precio por dia"
+            min="0"
+          >
+          <div *ngIf="tarifaForm.get('precio_dia')?.invalid && tarifaForm.get('precio_dia')?.touched" class="text-danger">
+            El precio por dia es obligatorio.
+          </div>
+        </div>
+
+        <!-- Campo para Precio de Lavado -->
+        <div class="form-group">
+          <label for="precio_lavado">Precio de Lavado:</label>
+          <input
+            type="number"
+            id="precio_lavado"
+            formControlName="precio_lavado"
+            class="form-control"
+            placeholder="Ingrese el precio de lavado"
+            min="0"
+          >
+          <div *ngIf="tarifaForm.get('precio_lavado')?.invalid && tarifaForm.get('precio_lavado')?.touched" class="text-danger">
+            El precio de lavado es obligatorio.
+          </div>
+        </div>
+
+        <!-- Botón para enviar el formulario -->
+        <div class="text-center mt-3">
+          <button type="submit" class="btn btn-primary" [disabled]="tarifaForm.invalid">Crear Tarifa</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

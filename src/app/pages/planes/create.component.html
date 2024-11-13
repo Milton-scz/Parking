@@ -1,0 +1,210 @@
+<div class="container mt-5">
+  <!-- Loading Spinner -->
+<div *ngIf="isLoading" class="text-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+</div>
+  <!-- Mensajes de éxito y error -->
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    {{ successMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <!-- Formulario para crear Plan -->
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <h2 class="text-center mb-4">Agregar Plan</h2>
+      <!-- Cambiamos el tipo de botón "Guardar Todo" y ajustamos el formulario para el evento ngSubmit -->
+      <form [formGroup]="planForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Campo para Abonado -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="abonado">Abonado:</label>
+              <select
+                id="abonado"
+                formControlName="abonado"
+                class="form-control"
+                (change)="onAbonadoChange()"
+              >
+                <option value="">Seleccione un abonado</option>
+                <option *ngFor="let abonado of abonados" [value]="abonado.abonadoId">
+                  {{ abonado.nombre }} - {{ abonado.cedula }}
+                </option>
+              </select>
+              <div *ngIf="planForm.get('abonado')?.invalid && planForm.get('abonado')?.touched" class="text-danger">
+                El abonado es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para Nombre Abonado -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="nombreAbonado">Nombre:</label>
+              <input
+                type="text"
+                id="nombreAbonado"
+                formControlName="nombreAbonado"
+                class="form-control"
+                [value]="selectedAbonado?.nombre"
+              >
+            </div>
+          </div>
+
+          <!-- Campo para Cédula Abonado -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="cedulaAbonado">Cédula:</label>
+              <input
+                type="text"
+                id="cedulaAbonado"
+                formControlName="cedulaAbonado"
+                class="form-control"
+                [value]="selectedAbonado?.cedula"
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Campo para Placa -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="placa">Placa:</label>
+              <input
+                type="text"
+                id="placa"
+                formControlName="placa"
+                class="form-control"
+                [value]="selectedAbonado?.placa"
+              >
+            </div>
+          </div>
+
+          <!-- Campo para Monto Semanal/Mensual -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="montoSemanaMes">Monto Semanal/Mensual:</label>
+              <input
+                type="number"
+                id="montoSemanaMes"
+                formControlName="montoSemanaMes"
+                class="form-control"
+                placeholder="Ingrese el monto semanal o mensual"
+                min="0"
+              >
+              <div *ngIf="planForm.get('montoSemanaMes')?.invalid && planForm.get('montoSemanaMes')?.touched" class="text-danger">
+                El monto es obligatorio y debe ser mayor a 0.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para Duración -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="duracion">Duración (semanas o meses):</label>
+              <input
+                type="number"
+                id="duracion"
+                formControlName="duracion"
+                class="form-control"
+                placeholder="Ingrese la duración del plan"
+                min="1"
+              >
+              <div *ngIf="planForm.get('duracion')?.invalid && planForm.get('duracion')?.touched" class="text-danger">
+                La duración es obligatoria y debe ser mayor a 0.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Campo para Tipo de Plan -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="tipo">Tipo de Plan:</label>
+              <select id="tipo" formControlName="tipo" class="form-control">
+                <option value="SEMANAL">Semanal</option>
+                <option value="MENSUAL">Mensual</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Campo para Fecha de Inicio -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="fechaInicio">Fecha de Inicio:</label>
+              <input
+                type="date"
+                id="fechaInicio"
+                formControlName="fechaInicio"
+                class="form-control"
+              >
+              <div *ngIf="planForm.get('fechaInicio')?.invalid && planForm.get('fechaInicio')?.touched" class="text-danger">
+                La fecha de inicio es obligatoria.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para Monto Total -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="montoTotal">Monto Total:</label>
+              <input
+                type="number"
+                id="montoTotal"
+                formControlName="montoTotal"
+                class="form-control"
+                placeholder="Monto total del plan"
+                min="0"
+              >
+              <div *ngIf="planForm.get('montoTotal')?.invalid && planForm.get('montoTotal')?.touched" class="text-danger">
+                El monto total es obligatorio.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón de Calcular -->
+        <div class="text-center mt-3">
+          <button type="button" class="btn btn-success" (click)="onCalculate()">
+            Calcular Pagos
+          </button>
+        </div>
+
+        <!-- Tabla de pagos -->
+        <div class="mt-4">
+          <h3 class="text-center">Pagos por realizar</h3>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Nro</th>
+                <th>Fecha de Pago</th>
+                <th>Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pago of detalle; let i = index">
+                <td>{{ pago.detalleId }}</td>
+                <td>{{ pago.fechaPago | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ pago.monto | currency:'USD' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Botón para Guardar Todo -->
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary" >Guardar Todo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

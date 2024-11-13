@@ -1,0 +1,160 @@
+<section id="contenido_principal" class="container">
+  <div class="row justify-content-center">
+      <div class="col text-center">
+          <h4 class="box-title text-secondary" style="font-size: 30px;">
+              Administrar Planes
+          </h4>
+          <!-- Modal de éxito -->
+          <div *ngIf="successMessage" class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                  {{ successMessage }}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Fin Modal de éxito -->
+
+          <!-- Modal de error -->
+          <div *ngIf="errorMessage" class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                  {{ errorMessage }}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Fin Modal de error -->
+      </div>
+  </div>
+
+  <div class="row mt-3">
+      <div class="col-md-12">
+          <div class="card border-primary">
+              <div class="card-body p-2">
+                <a routerLink="create-plan" class="btn btn-success btn-sm mr-2">Agregar</a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row mt-3">
+      <div class="col-md-12">
+          <div class="card border-dark">
+              <div class="card-body p-3">
+                  <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-condensed" id="tabla-empresas">
+                          <thead>
+                              <tr>
+                                  <th colspan="5"></th>
+                              </tr>
+                          </thead>
+                          <thead class="bg-light">
+                              <tr>
+                                  <th class="text-center">ID</th>
+                                  <th class="text-center">Nombre del Abonado</th>
+                                  <th class="text-center">Monto por Semana/Mes</th>
+                                  <th class="text-center">Duracion (Semana/Mes)</th>
+                                  <th class="text-center">Tipo</th>
+                                  <th class="text-center">Fecha de Inicio</th>
+                                  <th class="text-center">Monto Total</th>
+                                  <th class="text-center">Acción</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let plan of planes">
+                                  <td class="text-center">{{plan.planId}}</td>
+                                  <td class="text-center">{{plan.abonado.nombre}}</td>
+                                  <td class="text-center">{{plan.montoSemanaMes}}</td>
+                                  <td class="text-center">{{plan.duracion}}</td>
+                                  <td class="text-center">{{plan.tipo}}</td>
+                                  <td class="text-center">{{plan.fechaInicio}}</td>
+                                  <td class="text-center">{{plan.montoTotal}}</td>
+                                  <td class="text-center">
+                                  <!-- Button trigger modal -->
+                                  <button type="button" class="btn btn-primary"  (click)="openModal(plan)" data-toggle="modal" data-target="#exampleModal">
+                                    Detalles
+                                  </button>
+
+                                      <button (click)="deletePlan(plan.planId)" class="btn btn-danger btn-sm">Eliminar</button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <!-- Paginación -->
+                      <mat-paginator
+                        [length]="pageInfo.totalElementos"
+                        [pageSize]="pageSize"
+                        [pageIndex]="paginaActual"
+                        [pageSizeOptions]="[10, 20, 50, 100, 200, 500, 1000, 2000, 5000]"
+                        (page)="onPageChange($event)">
+                      </mat-paginator>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Modal para Detalles del Plan -->
+ <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Plan de Pagos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered table-striped table-condensed" id="tabla-empresas">
+          <thead>
+              <tr>
+                  <th colspan="5"></th>
+              </tr>
+          </thead>
+          <thead class="bg-light">
+              <tr>
+                  <th class="text-center">ID</th>
+                  <th class="text-center">Fecha de Pago</th>
+                  <th class="text-center">Monto a pagar</th>
+
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let detalle of detallesPlan">
+                  <td class="text-center">{{detalle.detalleId}}</td>
+                  <td class="text-center">{{detalle.fechaPago}}</td>
+                  <td class="text-center">{{detalle.monto}}</td>
+
+
+              </tr>
+          </tbody>
+      </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+

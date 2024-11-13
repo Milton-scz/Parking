@@ -1,0 +1,54 @@
+/* src/app/nav-button/nav-button.component.scss */
+.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    padding: 0;
+
+    li {
+      margin-left: 10px;
+
+      button {
+        background-color: #007bff; /* Color de fondo del botón */
+        color: #ffffff; /* Color del texto del botón */
+        border: none; /* Quita el borde del botón */
+        padding: 10px 20px; /* Ajusta el relleno del botón */
+        cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+        border-radius: 5px; /* Agrega esquinas redondeadas al botón */
+        font-size: 16px; /* Tamaño de fuente */
+        transition: background-color 0.3s; /* Transición para el cambio de color */
+
+        &.back-button {
+          background-color: #007bff;
+        }
+
+        &.next-button {
+          background-color: #28a745; /* Color diferente para el botón "Next" */
+        }
+
+        &:hover {
+          background-color: darken(#007bff, 10%); /* Cambia el color de fondo al pasar el ratón */
+        }
+
+        &.next-button:hover {
+          background-color: darken(#28a745, 10%); /* Cambia el color de fondo al pasar el ratón */
+        }
+
+        &:active {
+          background-color: darken(#007bff, 15%); /* Cambia el color de fondo al hacer clic */
+        }
+
+        &.next-button:active {
+          background-color: darken(#28a745, 15%); /* Cambia el color de fondo al hacer clic */
+        }
+      }
+    }
+  }
+}
+

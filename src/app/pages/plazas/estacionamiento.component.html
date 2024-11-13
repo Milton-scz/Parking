@@ -1,0 +1,29 @@
+<div class="container mt-5">
+  <!-- Título -->
+  <h3 class="text-center mb-4">Estado de las Plazas</h3>
+
+  <!-- Gráfico de plazas -->
+  <div class="d-flex flex-column justify-content-center">
+    <!-- Itera sobre las filas principales -->
+    <div *ngFor="let fila of plazasFiltradas" class="row fila-container">
+      <div class="col-12 d-flex flex-column">
+        <!-- Primera sub-fila (arriba) -->
+        <div class="sub-fila">
+          <div *ngFor="let plaza of fila.slice(0, 5)" class="plaza-box"
+            [ngClass]="{ 'disponible': plaza.estado === 'DISPONIBLE', 'ocupada': plaza.estado === 'OCUPADA' }">
+            <div>{{ plaza.numero }}</div>
+          </div>
+        </div>
+        <!-- Línea divisoria -->
+        <hr class="divider">
+        <!-- Segunda sub-fila (abajo) -->
+        <div class="sub-fila">
+          <div *ngFor="let plaza of fila.slice(5, 10)" class="plaza-box"
+            [ngClass]="{ 'disponible': plaza.estado === 'DISPONIBLE', 'ocupada': plaza.estado === 'OCUPADA' }">
+            <div>{{ plaza.numero }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

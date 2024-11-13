@@ -1,0 +1,90 @@
+<div class="container mt-5">
+  <!-- Mensajes de éxito y error -->
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    {{ successMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center mb-4">Ingreso Placa o Matrícula del Vehículo</h2>
+      <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="placa" class="h4">Ingrese Placa o Matrícula del Vehículo:</label>
+          <input
+            type="text"
+            id="placa"
+            formControlName="placa"
+            class="form-control text-center"
+            placeholder="123ABC"
+            style="font-weight: bold; font-size: 4rem; height: 100px; text-transform: uppercase;"
+          >
+          <div *ngIf="registroForm.get('placa')?.invalid && registroForm.get('placa')?.touched" class="text-danger">
+            La placa es obligatoria.
+          </div>
+        </div>
+
+
+
+
+        <div class="form-group mt-4">
+          <label for="tipoVehiculo" class="h5">Seleccione Clase de Vehículo:</label>
+          <select
+            id="tipoVehiculo"
+            formControlName="tipoVehiculo"
+            class="form-control"
+            (change)="onTipoChange()"
+          >
+            <option *ngFor="let tipo of tarifas" [value]="tipo.tarifaId"> {{ tipo.tipoVehiculo }}</option>
+          </select>
+          <div *ngIf="registroForm.get('tipoVehiculo')?.invalid && registroForm.get('tipoVehiculo')?.touched" class="text-danger">
+            El tipo de vehículo es obligatorio.
+          </div>
+        </div>
+
+
+        <div class="form-group mt-4">
+          <label for="hora" class="h5">Hora:</label>
+          <input
+            type="time"
+            id="hora"
+            formControlName="hora"
+            class="form-control text-center"
+            style="font-size: 1.5rem;"
+          >
+          <div *ngIf="registroForm.get('hora')?.invalid && registroForm.get('hora')?.touched" class="text-danger">
+            La hora es obligatoria.
+          </div>
+        </div>
+
+
+        <div class="form-group mt-4">
+          <label for="fecha" class="h5">Fecha:</label>
+          <input
+            type="date"
+            id="fecha"
+            formControlName="fecha"
+            class="form-control text-center"
+            style="font-size: 1.5rem;"
+          >
+          <div *ngIf="registroForm.get('fecha')?.invalid && registroForm.get('fecha')?.touched" class="text-danger">
+            La fecha es obligatoria.
+          </div>
+        </div>
+
+
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Ingresar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="container mt-5">
+
+  <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    {{ successMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+    {{ errorMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center mb-4">Agregar Abonado</h2>
+      <form [formGroup]="abonadoForm" (ngSubmit)="onSubmit()">
+
+ <div class="form-group">
+  <label for="nombre">Nombre:</label>
+  <input
+    type="text"
+    id="nombre"
+    formControlName="nombre"
+    class="form-control"
+    placeholder="Ingrese nombre del abonado"
+  >
+  <div *ngIf="abonadoForm.get('nombre')?.invalid && abonadoForm.get('nombre')?.touched" class="text-danger">
+
+  </div>
+</div>
+
+
+        <div class="form-group">
+          <label for="cedula">Cédula:</label>
+          <input
+            type="text"
+            id="cedula"
+            formControlName="cedula"
+            class="form-control"
+            placeholder="Ingrese la cédula del abonado"
+          >
+          <div *ngIf="abonadoForm.get('cedula')?.invalid && abonadoForm.get('cedula')?.touched" class="text-danger">
+            La cédula es obligatoria y debe tener 8 caracteres.
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="placa">Placa:</label>
+          <input
+            type="text"
+            id="placa"
+            formControlName="placa"
+            class="form-control"
+            placeholder="Ingrese la placa del vehículo"
+          >
+          <div *ngIf="abonadoForm.get('placa')?.invalid && abonadoForm.get('placa')?.touched" class="text-danger">
+            La placa es obligatoria.
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="direccion">Dirección:</label>
+          <input
+            type="text"
+            id="direccion"
+            formControlName="direccion"
+            class="form-control"
+            placeholder="Ingrese la dirección del abonado"
+          >
+          <div *ngIf="abonadoForm.get('direccion')?.invalid && abonadoForm.get('direccion')?.touched" class="text-danger">
+            La dirección es obligatoria.
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="celular">Celular:</label>
+          <input
+            type="text"
+            id="celular"
+            formControlName="celular"
+            class="form-control"
+            placeholder="Ingrese el celular del abonado"
+          >
+          <div *ngIf="abonadoForm.get('celular')?.invalid && abonadoForm.get('celular')?.touched" class="text-danger">
+            El celular es obligatorio y debe tener 10 dígitos.
+          </div>
+        </div>
+
+
+        <div class="text-center mt-3">
+          <button type="submit" class="btn btn-primary">Crear Abonado</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
